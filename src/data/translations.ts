@@ -97,7 +97,11 @@ Yuvaraj & Hemanth`
       today: 'Today',
       years: 'Years',
       months: 'Months',
-      days: 'Days'
+      days: 'Days',
+      totalDays: 'Total Days',
+      hours: 'Hours',
+      minutes: 'Minutes',
+      seconds: 'Seconds'
     },
     final: {
       quote1: 'The best love stories are not written in books.',
@@ -207,7 +211,11 @@ Yuvaraj & Hemanth`
       today: 'నేటి వరకు',
       years: 'సంవత్సరాలు',
       months: 'నెలలు',
-      days: 'రోజులు'
+      days: 'రోజులు',
+      totalDays: 'మొత్తం రోజులు',
+      hours: 'గంటలు',
+      minutes: 'నిమిషాలు',
+      seconds: 'సెకన్లు'
     },
     final: {
       quote1: 'అందమైన ప్రేమకథలు పుస్తకాలలో రాయబడవు.',

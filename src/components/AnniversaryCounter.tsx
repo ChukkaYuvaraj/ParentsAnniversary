@@ -2,16 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { parents } from '../data/parents';
-import { differenceInYears, differenceInMonths, differenceInDays, addYears, addMonths } from 'date-fns';
+import { differenceInYears, differenceInMonths, differenceInDays, differenceInSeconds, addYears, addMonths } from 'date-fns';
 
 export const AnniversaryCounter: React.FC = () => {
   const { t, language } = useLanguage();
   
-  const [timeTogether, setTimeTogether] = useState({ years: 0, months: 0, days: 0 });
+  const [timeTogether, setTimeTogether] = useState({
+    years: 0,
+    months: 0,
+    days: 0,
+    totalDays: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
 
   useEffect(() => {
     const calculateTime = () => {
-      const start = new Date(parents.weddingDate);
+      const [year, month, day] = parents.weddingDate.split('-').map(Number);
+      const start = new Date(year, month - 1, day);
       const now = new Date();
       
       const years = differenceInYears(now, start);
@@ -21,12 +30,22 @@ export const AnniversaryCounter: React.FC = () => {
       const afterMonths = addMonths(afterYears, months);
       
       const days = differenceInDays(now, afterMonths);
+      const totalSeconds = Math.max(0, differenceInSeconds(now, start));
+      const totalMinutes = Math.floor(totalSeconds / 60);
       
-      setTimeTogether({ years, months, days });
+      setTimeTogether({
+        years,
+        months,
+        days,
+        totalDays: Math.floor(totalSeconds / 86400),
+        hours: Math.floor(totalMinutes / 60) % 24,
+        minutes: totalMinutes % 60,
+        seconds: totalSeconds % 60
+      });
     };
 
     calculateTime();
-    const timer = setInterval(calculateTime, 1000 * 60 * 60); // Update every hour
+    const timer = setInterval(calculateTime, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -53,7 +72,7 @@ export const AnniversaryCounter: React.FC = () => {
             <span>{t('counter.today')}</span>
           </div>
 
-          <div className="flex justify-center gap-8 md:gap-16">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-8 md:gap-x-14">
             <div className="flex flex-col items-center">
               <span className="text-3xl md:text-5xl font-serif text-charcoal-900 mb-2">{timeTogether.years}</span>
               <span className={`text-sm tracking-widest uppercase text-gold-500 ${language === 'te' ? 'font-telugu' : 'font-sans'}`}>{t('counter.years')}</span>
@@ -65,6 +84,22 @@ export const AnniversaryCounter: React.FC = () => {
             <div className="flex flex-col items-center">
               <span className="text-3xl md:text-5xl font-serif text-charcoal-900 mb-2">{timeTogether.days}</span>
               <span className={`text-sm tracking-widest uppercase text-gold-500 ${language === 'te' ? 'font-telugu' : 'font-sans'}`}>{t('counter.days')}</span>
+            </div>
+            <div className="flex w-full flex-col items-center border-t border-gold-400/20 pt-8 md:w-auto md:border-t-0 md:pt-0">
+              <span className="text-3xl md:text-5xl font-serif text-charcoal-900 mb-2">{timeTogether.totalDays.toLocaleString()}</span>
+              <span className={`text-sm tracking-widest uppercase text-gold-500 ${language === 'te' ? 'font-telugu' : 'font-sans'}`}>{t('counter.totalDays')}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-3xl md:text-5xl font-serif text-charcoal-900 mb-2">{timeTogether.hours}</span>
+              <span className={`text-sm tracking-widest uppercase text-gold-500 ${language === 'te' ? 'font-telugu' : 'font-sans'}`}>{t('counter.hours')}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-3xl md:text-5xl font-serif text-charcoal-900 mb-2">{timeTogether.minutes}</span>
+              <span className={`text-sm tracking-widest uppercase text-gold-500 ${language === 'te' ? 'font-telugu' : 'font-sans'}`}>{t('counter.minutes')}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-3xl md:text-5xl font-serif text-charcoal-900 mb-2">{timeTogether.seconds}</span>
+              <span className={`text-sm tracking-widest uppercase text-gold-500 ${language === 'te' ? 'font-telugu' : 'font-sans'}`}>{t('counter.seconds')}</span>
             </div>
           </div>
         </motion.div>

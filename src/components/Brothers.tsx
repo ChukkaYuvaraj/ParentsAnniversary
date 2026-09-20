@@ -63,7 +63,7 @@ export const Brothers: React.FC = () => {
         >
           <div className="aspect-video bg-charcoal-950 border border-ivory/10 p-2">
              <img 
-                src="/images/children%20now/chukka%20yuvaraj.jpeg"
+                src="/images/children/IMG20211030182815.jpg"
                 alt="Brothers Childhood" 
                 className="w-full h-full object-contain bg-charcoal-950"
                 onError={(e) => {
@@ -73,7 +73,7 @@ export const Brothers: React.FC = () => {
           </div>
           <div className="aspect-video bg-charcoal-950 border border-ivory/10 p-2">
              <img 
-                src="/images/children%20now/chukka%20hemanth%20kumar.jpg"
+                src="/images/children/WhatsApp Image 2026-09-20 at 7.03.00 PM (2).jpeg"
                 alt="Brothers Now" 
                 className="w-full h-full object-contain bg-charcoal-950 grayscale hover:grayscale-0 transition-all duration-700"
                 onError={(e) => {
